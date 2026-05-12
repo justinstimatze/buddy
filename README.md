@@ -107,18 +107,18 @@ curl -fsSL https://raw.githubusercontent.com/fiorastudio/buddy/master/install.sh
 irm https://raw.githubusercontent.com/fiorastudio/buddy/master/install.ps1 | iex
 ```
 
-### Join the Community
-
-Connect with other buddy rescuers, share your companion's evolution, and get help in our Slack community:
-
-[**Join Buddy Slack Workspace**](https://join.slack.com/t/buddy-mcp/invite/enQtMTEwOTI4OTM1MzUzOTktMzVlMjc0YWRiZDllODgxMDQ1MzYwZDhhM2ZmNDRkNGEyNTBkZDU4MDQxNTM0N2EyYWQwNTBhN2QwMjFjYTBkZf)
-
 The installer will guide you through onboarding:
 
 - **Rescue your old buddy** — if you had a `/buddy` in Claude Code, the wizard finds it in `~/.claude.json` and brings it home with the same name, species, and stats, now with leveling + XP
 - **Hatch a new buddy** — get a fresh companion with random species, stats, and personality
 
 > Requires `node` 18+ and `git`. Use `--no-onboard` to skip the wizard in CI.
+
+### Join the Community
+
+Connect with other buddy rescuers, share your companion's evolution, and get help in our Slack community:
+
+[**Join Buddy Slack Workspace**](https://join.slack.com/t/buddy-mcp/invite/enQtMTEwOTI4OTM1MzUzOTktMzVlMjc0YWRiZDllODgxMDQ1MzYwZDhhM2ZmNDRkNGEyNTBkZDU4MDQxNTM0N2EyYWQwNTBhN2QwMjFjYTBkZf)
 
 | Client | Status |
 |---|---|
