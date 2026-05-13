@@ -2,6 +2,28 @@
 
 All notable changes to this project will follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - Unreleased
+
+### Added
+- **Buddy reasoning graph CLI** (PR #124) — new `buddy graph` command generates an interactive HTML visualization of Buddy's guard-mode reasoning graph from `~/.buddy/buddy.db`. Supports full-graph and session-scoped output, optional `--out` paths, and `--open` browser launch.
+- **Codex skill for graph generation** — added `.codex/skills/buddy-graph` so Codex can invoke the graph workflow through the Buddy CLI instead of adding an MCP tool.
+- **Claude Code project command** — added `.claude/commands/buddy-graph.md` so Buddy contributors can run `/project:buddy-graph` inside the Buddy repo.
+- **Claude Code global `/buddy-graph` install** — Buddy installers now write `~/.claude/commands/buddy-graph.md` (macOS/Linux and Windows), so installed Buddy users can invoke `/buddy-graph` from any project in Claude Code.
+
+### Changed
+- **Cross-host graph workflow is CLI-backed, not MCP-backed** — graph visualization ships as a Buddy CLI + host wrappers (Codex skill and Claude commands), avoiding any new MCP tool/schema overhead.
+
+### Upgrade notes
+- Re-run the Buddy installer to get the global Claude Code `/buddy-graph` command and the latest `buddy graph` CLI:
+```bash
+# macOS/Linux
+curl -fsSL https://raw.githubusercontent.com/fiorastudio/buddy/master/install.sh | bash
+
+# Windows
+irm https://raw.githubusercontent.com/fiorastudio/buddy/master/install.ps1 | iex
+```
+- After reinstalling, Claude Code users can run `/buddy-graph` from any project, and Buddy users can also call `buddy graph` directly from the shell.
+
 ## [1.0.6] - 2026-04-29
 
 ### Added

@@ -159,6 +159,8 @@ $CLAUDE_CONFIGURED = $true
 # Configure hooks + statusline in settings.json via node (avoids PowerShell
 # ConvertFrom-Json flattening single-element arrays into bare objects).
 $claudeSettings = "$claudeDir\settings.json"
+$commandsDir = Join-Path $claudeDir 'commands'
+$buddyGraphCommand = Join-Path $commandsDir 'buddy-graph.md'
 if (!(Test-Path $claudeSettings)) {
   '{}' | Set-Content $claudeSettings -Encoding UTF8
 }
@@ -272,6 +274,34 @@ if (changed) {
 }
 process.stdout.write(result.join(','));
 '@ 2>$null
+
+@'
+---
+description: Generate and open an interactive visualization of Buddy guard-mode reasoning data using the Buddy CLI.
+---
+
+Run the Buddy graph CLI to visualize the reasoning graph.
+
+If `$ARGUMENTS` is present, treat it as optional CLI arguments such as a session ID or `--out` path.
+
+```bash
+set -euo pipefail
+
+args=()
+if [ -n "${ARGUMENTS:-}" ]; then
+  read -r -a args <<< "$ARGUMENTS"
+fi
+
+if command -v buddy >/dev/null 2>&1; then
+  buddy graph "${args[@]}" --open
+else
+  node "$HOME/.buddy/server/dist/cli/buddy.js" graph "${args[@]}" --open
+fi
+```
+
+Execute the bash block above, then report the saved graph path and basic graph counts back to the user.
+'@ | Set-Content -Path $buddyGraphCommand -Encoding UTF8
+Write-Host "  ✓ Claude Code global /buddy-graph command installed ($buddyGraphCommand)" -ForegroundColor Green
 
 if ($settingsResult -match 'mcp:updated') {
   Write-Host "  ✓ MCP server registered in settings.json" -ForegroundColor Green

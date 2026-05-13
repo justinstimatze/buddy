@@ -132,11 +132,41 @@ configure_claude_code() {
   local stop_hook_command
   local prompt_hook_command
   local statusline_command
+  local commands_dir="$config_dir/commands"
+  local buddy_graph_command="$commands_dir/buddy-graph.md"
   stop_hook_command=$(printf '%q %q' "$CONFIG_NODE_BIN" "$stop_hook_path")
   prompt_hook_command=$(printf '%q %q' "$CONFIG_NODE_BIN" "$prompt_hook_path")
   statusline_command=$(printf '%q %q' "$CONFIG_NODE_BIN" "$INSTALL_DIR/dist/statusline-wrapper.js")
 
-  mkdir -p "$config_dir"
+  mkdir -p "$config_dir" "$commands_dir"
+
+  cat > "$buddy_graph_command" <<EOF
+---
+description: Generate and open an interactive visualization of Buddy guard-mode reasoning data using the Buddy CLI.
+---
+
+Run the Buddy graph CLI to visualize the reasoning graph.
+
+If \`$ARGUMENTS\` is present, treat it as optional CLI arguments such as a session ID or \`--out\` path.
+
+\`\`\`bash
+set -euo pipefail
+
+args=()
+if [ -n "${ARGUMENTS:-}" ]; then
+  read -r -a args <<< "$ARGUMENTS"
+fi
+
+if command -v buddy >/dev/null 2>&1; then
+  buddy graph "${args[@]}" --open
+else
+  "$CONFIG_NODE_BIN" "$INSTALL_DIR/dist/cli/buddy.js" graph "${args[@]}" --open
+fi
+\`\`\`
+
+Execute the bash block above, then report the saved graph path and basic graph counts back to the user.
+EOF
+  echo -e "  ${GREEN}✓${NC} Claude Code global /buddy-graph command installed ${DIM}($buddy_graph_command)${NC}"
 
   local registered=0
   if command -v claude &> /dev/null; then

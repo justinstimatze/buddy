@@ -7,12 +7,16 @@ if (!subcommand || subcommand === '--help' || subcommand === '-h') {
 
 Commands:
   doctor    Run diagnostics on your Buddy installation
+  graph     Generate an interactive reasoning graph
   onboard   Interactive onboarding wizard`);
   process.exit(0);
 }
 
 if (subcommand === 'doctor') {
   await import('./doctor-cli.js');
+} else if (subcommand === 'graph') {
+  const { runGraphCommand } = await import('./graph-cli.js');
+  process.exit(runGraphCommand(process.argv.slice(3)));
 } else if (subcommand === 'onboard') {
   await import('./onboard.js');
 } else {
