@@ -132,11 +132,13 @@ configure_claude_code() {
   local stop_hook_command
   local prompt_hook_command
   local statusline_command
+  local commands_dir="$config_dir/commands"
+  local buddy_graph_command="$commands_dir/buddy-graph.md"
   stop_hook_command=$(printf '%q %q' "$CONFIG_NODE_BIN" "$stop_hook_path")
   prompt_hook_command=$(printf '%q %q' "$CONFIG_NODE_BIN" "$prompt_hook_path")
   statusline_command=$(printf '%q %q' "$CONFIG_NODE_BIN" "$INSTALL_DIR/dist/statusline-wrapper.js")
 
-  mkdir -p "$config_dir"
+  mkdir -p "$config_dir" "$commands_dir"
 
   local registered=0
   if command -v claude &> /dev/null; then
