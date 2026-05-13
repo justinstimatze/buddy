@@ -15,7 +15,8 @@ Commands:
 if (subcommand === 'doctor') {
   await import('./doctor-cli.js');
 } else if (subcommand === 'graph') {
-  await import('./graph-cli.js');
+  const { runGraphCommand } = await import('./graph-cli.js');
+  process.exit(runGraphCommand(process.argv.slice(3)));
 } else if (subcommand === 'onboard') {
   await import('./onboard.js');
 } else {

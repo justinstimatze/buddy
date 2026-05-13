@@ -11,7 +11,7 @@ set -euo pipefail
 
 args=()
 if [ -n "${ARGUMENTS:-}" ]; then
-  args+=($ARGUMENTS)
+  read -r -a args <<< "$ARGUMENTS"
 fi
 
 if command -v buddy >/dev/null 2>&1; then
