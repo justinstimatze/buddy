@@ -4,14 +4,21 @@ description: Generate and open an interactive visualization of Buddy guard-mode 
 
 Run the Buddy graph CLI to visualize the reasoning graph.
 
-If a session ID is provided in `$ARGUMENTS`, pass it through to the command.
+If `$ARGUMENTS` is present, treat it as optional CLI arguments such as a session ID or `--out` path.
 
 ```bash
+set -euo pipefail
+
+args=()
+if [ -n "${ARGUMENTS:-}" ]; then
+  args+=($ARGUMENTS)
+fi
+
 if command -v buddy >/dev/null 2>&1; then
-  buddy graph $ARGUMENTS --open
+  buddy graph "${args[@]}" --open
 else
-  node dist/cli/buddy.js graph $ARGUMENTS --open
+  node dist/cli/buddy.js graph "${args[@]}" --open
 fi
 ```
 
-Execute the bash block above and then report the saved graph path and basic graph counts back to the user.
+Execute the bash block above, then report the saved graph path and basic graph counts back to the user.
