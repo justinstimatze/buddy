@@ -8,15 +8,15 @@ import { CAUTION_FINDINGS, KUDOS_FINDINGS } from './types.js';
 
 const DB_PATH = process.env.BUDDY_DB_PATH || join(homedir(), '.buddy', 'buddy.db');
 
-const BASIS_STYLES: Record<string, { color: string; shape: string; label: string }> = {
-  research: { color: '#1E88E5', shape: 'trapezoid', label: 'research' },
-  empirical: { color: '#43A047', shape: 'diamond', label: 'empirical' },
-  deduction: { color: '#8E24AA', shape: 'circle', label: 'deduction' },
-  analogy: { color: '#FB8C00', shape: 'rect', label: 'analogy' },
-  definition: { color: '#546E7A', shape: 'hexagon', label: 'definition' },
-  llm_output: { color: '#FDD835', shape: 'octagon', label: 'llm_output' },
-  assumption: { color: '#6D4C41', shape: 'box', label: 'assumption' },
-  vibes: { color: '#E53935', shape: 'triangleDown', label: 'vibes' },
+const BASIS_STYLES: Record<string, { color: string; shape: string }> = {
+  research: { color: '#1E88E5', shape: 'trapezoid' },
+  empirical: { color: '#43A047', shape: 'diamond' },
+  deduction: { color: '#8E24AA', shape: 'circle' },
+  analogy: { color: '#FB8C00', shape: 'wideRect' },
+  definition: { color: '#546E7A', shape: 'hexagon' },
+  llm_output: { color: '#FDD835', shape: 'octagon' },
+  assumption: { color: '#6D4C41', shape: 'box' },
+  vibes: { color: '#E53935', shape: 'triangleDown' },
 };
 
 const BASIS_COLORS: Record<string, string> = Object.fromEntries(
@@ -32,8 +32,8 @@ function svgMarkupForBasisShape(shape: string, fill: string, stroke: string, str
       return `<polygon points="50,8 92,50 50,92 8,50" ${common} />`;
     case 'circle':
       return `<circle cx="50" cy="50" r="38" ${common} />`;
-    case 'rect':
-      return `<rect x="12" y="18" width="76" height="64" rx="4" ry="4" ${common} />`;
+    case 'wideRect':
+      return `<rect x="8" y="24" width="84" height="52" rx="2" ry="2" ${common} />`;
     case 'hexagon':
       return `<polygon points="25,10 75,10 92,50 75,90 25,90 8,50" ${common} />`;
     case 'octagon':
@@ -280,7 +280,7 @@ function buildHtml(params: {
           springLength: 320,
           springConstant: 0.03,
           damping: 0.5,
-          avoidOverlap: 1.35,
+          avoidOverlap: 1.0,
         },
         stabilization: { iterations: 400, fit: true },
         minVelocity: 0.75,
